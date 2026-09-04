@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cristian Vegara — Backend Java Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDEEE9;
+    --bg-raised: #F6F6F2;
+    --ink: #1B2430;
+    --ink-soft: #5B6472;
+    --line: #D6D4C9;
+    --teal: #1B6F68;
+    --teal-soft: #E4EEEC;
+    --amber: #C4622D;
+    --radius: 3px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site {
+    padding: 28px 0 0;
+    border-bottom: none;
+  }
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--teal);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); display: inline-block; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 64px 0 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(34px, 4.6vw, 50px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+  }
+  .hero .role {
+    margin-top: 14px;
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+  .hero-meta {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .hero-cta {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+  }
+  .btn {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 20px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-primary { background: var(--ink); color: var(--bg-raised); }
+  .btn-primary:hover { background: var(--teal); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-diagram { width: 100%; height: auto; }
+  .diagram-node { fill: var(--bg-raised); stroke: var(--ink); stroke-width: 1.2; }
+  .diagram-node.core { fill: var(--teal); stroke: var(--teal); }
+  .diagram-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--ink-soft); }
+  .diagram-label.core-label { fill: var(--bg-raised); }
+  .diagram-line { stroke: var(--ink-soft); stroke-width: 1; opacity: 0.55; }
+
+  /* ---------- ABOUT STRIP ---------- */
+  .about {
+    padding: 8px 0 56px;
+    border-top: 1px solid var(--line);
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 32px;
+  }
+  .about .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    padding-top: 4px;
+  }
+  .about p {
+    max-width: 62ch;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .about p + p { margin-top: 14px; }
+
+  /* ---------- PROJECTS ---------- */
+  section.projects {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 8px;
+  }
+  .section-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 28px;
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+    transition: padding-left 0.18s ease;
+  }
+  .project:last-child { border-bottom: 1px solid var(--line); }
+  .project:hover { padding-left: 6px; }
+
+  .project-meta { }
+  .project-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    text-transform: none;
+  }
+  .project-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  .project-when {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  .project-desc { font-size: 15px; color: var(--ink); max-width: 60ch; }
+  .project-stack {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .stack-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 3px 9px;
+  }
+  .project-links {
+    margin-top: 16px;
+    display: flex;
+    gap: 18px;
+    font-size: 14px;
+  }
+  .project-links a {
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink-soft);
+    padding-bottom: 1px;
+  }
+  .project-links a:hover { color: var(--teal); border-color: var(--teal); }
+
+  /* ---------- STACK ---------- */
+  section.stack {
+    border-top: 1px solid var(--line);
+    padding: 44px 0 56px;
+  }
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 26px;
+  }
+  .stack-group .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .stack-group ul { list-style: none; }
+  .stack-group li {
+    font-size: 14.5px;
+    color: var(--ink);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .stack-group li:last-child { border-bottom: none; }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer.contact {
+    border-top: 1px solid var(--line);
+    padding: 48px 0 60px;
+  }
+  footer.contact h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    max-width: 20ch;
+  }
+  .contact-row {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 40px;
+  }
+  .contact-item .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .contact-item .value {
+    margin-top: 4px;
+    font-size: 15px;
+  }
+  .contact-item a { text-decoration: none; border-bottom: 1px solid var(--line); }
+  .contact-item a:hover { color: var(--teal); border-color: var(--teal); }
+  .foot-note {
+    margin-top: 44px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; padding-top: 44px; }
+    .hero-diagram { order: -1; max-width: 320px; margin: 0 auto; }
+    .about { grid-template-columns: 1fr; gap: 14px; }
+    .project { grid-template-columns: 1fr; gap: 12px; }
+    .stack-grid { grid-template-columns: 1fr; gap: 24px; }
+    .nav-links { display: none; }
+  }
+
+  /* focus visibility */
+  a:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <div class="nav-mark">Cristian Vegara</div>
+    <nav class="nav-links">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#stack">Stack</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-status"><span class="dot"></span>Abierto a nuevas oportunidades</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div>
+      <h1>Backend Java developer que construye sistemas completos, no demos.</h1>
+      <p class="role">Modelo, autorización, base de datos y cliente funcionando de extremo a extremo — no solo el endpoint que se ve bien en una entrevista.</p>
+      <div class="hero-meta">
+        <span>Alicante, España</span>
+        <span>Abierto a Madrid</span>
+        <span>1.5 años de experiencia</span>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
+        <a class="btn btn-ghost" href="mailto:cristian.vegara.garcia@gmail.com">Contactar</a>
+      </div>
+    </div>
+
+    <svg class="hero-diagram" viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de nodos representando el stack técnico: núcleo backend Java/Spring conectado a JWT, PostgreSQL, MySQL, React y Docker">
+      <line class="diagram-line" x1="170" y1="150" x2="60" y2="70" />
+      <line class="diagram-line" x1="170" y1="150" x2="270" y2="60" />
+      <line class="diagram-line" x1="170" y1="150" x2="280" y2="170" />
+      <line class="diagram-line" x1="170" y1="150" x2="70" y2="220" />
+      <line class="diagram-line" x1="170" y1="150" x2="200" y2="250" />
+      <line class="diagram-line" x1="170" y1="150" x2="55" y2="150" />
+
+      <circle class="diagram-node core" cx="170" cy="150" r="34" />
+      <text class="diagram-label core-label" x="170" y="147" text-anchor="middle">Java /</text>
+      <text class="diagram-label core-label" x="170" y="159" text-anchor="middle">Spring</text>
+
+      <circle class="diagram-node" cx="60" cy="70" r="26" />
+      <text class="diagram-label" x="60" y="74" text-anchor="middle">JWT</text>
+
+      <circle class="diagram-node" cx="270" cy="60" r="26" />
+      <text class="diagram-label" x="270" y="58" text-anchor="middle">Postgre-</text>
+      <text class="diagram-label" x="270" y="68" text-anchor="middle">SQL</text>
+
+      <circle class="diagram-node" cx="280" cy="170" r="26" />
+      <text class="diagram-label" x="280" y="174" text-anchor="middle">MySQL</text>
+
+      <circle class="diagram-node" cx="70" cy="220" r="26" />
+      <text class="diagram-label" x="70" y="224" text-anchor="middle">React</text>
+
+      <circle class="diagram-node" cx="200" cy="250" r="26" />
+      <text class="diagram-label" x="200" y="254" text-anchor="middle">Docker</text>
+
+      <circle class="diagram-node" cx="55" cy="150" r="22" />
+      <text class="diagram-label" x="55" y="154" text-anchor="middle">JUnit</text>
+    </svg>
+  </section>
+
+  <section class="about">
+    <div class="label">Sobre mí</div>
+    <div>
+      <p>Empecé en un puesto full-stack (CE Informática), pero mi base y mi interés real están en el backend: modelado de dominio, autorización, integridad de datos. Los proyectos personales que muestro aquí son aplicaciones completas que uso o que usa gente real, no ejercicios de curso.</p>
+      <p>He practicado deliberadamente el desarrollo apoyado en agentes de IA — planificación de contexto, adaptación de estrategia según el tipo de tarea — construyendo software de producción, no solo prototipos rápidos.</p>
+    </div>
+  </section>
+
+  <section class="projects" id="proyectos">
+    <h2 class="section-heading">Proyectos</h2>
+
+    <article class="project">
+      <div class="project-meta">
+        <div class="project-tag">Backend · Java</div>
+        <div class="project-name">crm-asociaciones</div>
+        <div class="project-when">2025 – en curso</div>
+      </div>
+      <div>
+        <p class="project-desc">Sistema de gestión para asociaciones de servicios sociales: fichas de paciente, planes de servicio con generación automática de calendario, control de asistencia, sanciones automáticas e informes. Backend con autorización en dos capas (permiso general + capacidad por servicio) y cliente de escritorio en JavaFX, empaquetado para macOS y Windows.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Java</span>
+          <span class="stack-pill">Spring Boot</span>
+          <span class="stack-pill">Spring Security · JWT</span>
+          <span class="stack-pill">Spring Data JPA</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">JavaFX</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/CristianVegara/crm-asociaciones" target="_blank" rel="noopener">Código en GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-meta">
+        <div class="project-tag">Backend · Java</div>
+        <div class="project-name">PMF Gestión Hotelera</div>
+        <div class="project-when">2024</div>
+      </div>
+      <div>
+        <p class="project-desc">Sistema de gestión hotelera con arquitectura en capas — controladores, servicios, DAOs, entidades — sobre MySQL con migraciones de esquema versionadas. Autenticación JWT, cliente en React (Vite), más de 15 clases de test con JUnit y despliegue containerizado con Docker Compose.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Java</span>
+          <span class="stack-pill">Spring Boot</span>
+          <span class="stack-pill">Spring Data JPA</span>
+          <span class="stack-pill">JWT</span>
+          <span class="stack-pill">Docker</span>
+          <span class="stack-pill">React</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/CristianVegara/PMF-Gestion-Hotelera" target="_blank" rel="noopener">Código en GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-meta">
+        <div class="project-tag">Full-stack · SaaS</div>
+        <div class="project-name">TCG Eventos</div>
+        <div class="project-when">2026 · AIT Solutions</div>
+      </div>
+      <div>
+        <p class="project-desc">Punto de venta y conciliación de caja para ferias de cartas coleccionables, en uso en eventos reales. Dos sistemas de autenticación conviviendo sin mezclarse — cuentas reales de Supabase Auth para administradores, JWT propio para trabajadores temporales sin email — con aislamiento de datos por empresa vía RLS y PWA instalable.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Next.js 15</span>
+          <span class="stack-pill">TypeScript</span>
+          <span class="stack-pill">Supabase</span>
+          <span class="stack-pill">PostgreSQL</span>
+          <span class="stack-pill">Docker</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/CristianVegara/tcg-events" target="_blank" rel="noopener">Código en GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-meta">
+        <div class="project-tag">Juego · AI-assisted dev</div>
+        <div class="project-name">The Spire</div>
+        <div class="project-when">2024 – 2025</div>
+      </div>
+      <div>
+        <p class="project-desc">Roguelite de navegador construido como ejercicio deliberado de desarrollo agéntico: planificación del proyecto en torno a agentes de IA, gestión de contexto y adaptación de estrategia de prompting según el tipo de tarea. Sistema de eventos desacoplado para UI y estados modales, y un pase completo de accesibilidad (ARIA, navegación por teclado, layout responsive).</p>
+        <div class="project-stack">
+          <span class="stack-pill">TypeScript</span>
+          <span class="stack-pill">Phaser 3</span>
+          <span class="stack-pill">Accesibilidad</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/CristianVegara/roguelite" target="_blank" rel="noopener">Código en GitHub</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="stack" id="stack">
+    <h2 class="section-heading">Stack técnico</h2>
+    <div class="stack-grid">
+      <div class="stack-group">
+        <div class="label">Backend</div>
+        <ul>
+          <li>Java 17 · Spring Boot 3</li>
+          <li>Spring Data JPA · Spring Security</li>
+          <li>JWT · REST APIs</li>
+          <li>JUnit</li>
+        </ul>
+      </div>
+      <div class="stack-group">
+        <div class="label">Datos e infraestructura</div>
+        <ul>
+          <li>PostgreSQL · MySQL</li>
+          <li>Docker · Docker Compose</li>
+          <li>Git / GitHub</li>
+        </ul>
+      </div>
+      <div class="stack-group">
+        <div class="label">Frontend</div>
+        <ul>
+          <li>TypeScript · JavaScript</li>
+          <li>React · Next.js</li>
+          <li>JavaFX</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="contact" id="contacto">
+  <div class="wrap">
+    <h2>¿Hablamos de una posición backend?</h2>
+    <div class="contact-row">
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <div class="value"><a href="mailto:cristian.vegara.garcia@gmail.com">cristian.vegara.garcia@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Teléfono</div>
+        <div class="value">+34 645 61 42 64</div>
+      </div>
+      <div class="contact-item">
+        <div class="label">GitHub</div>
+        <div class="value"><a href="https://github.com/CristianVegara" target="_blank" rel="noopener">github.com/CristianVegara</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Ubicación</div>
+        <div class="value">Alicante, España</div>
+      </div>
+    </div>
+    <div class="foot-note">Cristian Vegara — Backend Java Developer</div>
+  </div>
+</footer>
+
+</body>
+</html>
